@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.conf.urls import include
 from rango import views
 
 urlpatterns = [
-    url(r'^$', views.index, name = 'index'),
+    url(r'^$', views.index, name='index'),
+    url(r'^rango/', include('rango.urlsRango')), #file name needs to be in here from the newly generated one that you created in the Rango folder
     url(r'^admin/', admin.site.urls),
 ]
+
