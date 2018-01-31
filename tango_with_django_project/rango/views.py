@@ -26,7 +26,11 @@ def about(request):
     #context_dict = { 'Rango says here is the about page.'}
 
     return HttpResponse("Rango  says here is the about page. <a href='/rango/'>View index page</a>")  #The HTML link is a reference back to the starter page
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD:rango/views.py
+>>>>>>> 73f47a3d8b2bd0cbb42b6221925de510406ae607
 
 def show_category (request, category_name_slug):
 # Create a context dictionary which we can pass
@@ -66,4 +70,9 @@ def show_category (request, category_name_slug):
     # Go render the response and return it to the client
 
     return render(request, 'rango/category.html', context_dict)
+<<<<<<< HEAD
 
+=======
+=======
+>>>>>>> d9087ff183b901744eb70f92da5a3f29a9167b04:tango_with_django_project/rango/views.py
+>>>>>>> 73f47a3d8b2bd0cbb42b6221925de510406ae607
