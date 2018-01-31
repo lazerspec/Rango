@@ -21,7 +21,7 @@ def index (request):
    #return HttpResponse("Rango says hey there partner! ")
 
 def about(request):
-
+##
     #context_dict = { 'Rango says here is the about page.'}
 
     return HttpResponse("Rango  says here is the about page. <a href='/rango/'>View index page</a>")  #The HTML link is a reference back to the starter page
