@@ -15,12 +15,6 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-<<<<<<< HEAD
-
-urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-]
-=======
 from django.conf.urls import include
 from rango import views
 from django.conf import settings
@@ -32,4 +26,3 @@ urlpatterns = [ #Media file directory does not exist yet?
     url(r'^admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
->>>>>>> ad47016f507c871bce5af71caed050e7339df80b
