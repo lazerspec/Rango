@@ -14,10 +14,12 @@ def index (request):    #Responsible for the main page view
     #  that will be passed to the template engine.
 
     category_list = Category.objects.order_by('-likes')[:5] #Order by method - descending order
-    context_dict = {'categories': category_list}
+    #context_dict = {'categories': category_list}
+
+    page_list = Page.objects.order_by('-views')[:5] #order by views
     #context_dict = {'boldmessage': "Crunchy, creamy, cookie, candy, cupcake!"}
 
-
+    context_dict = {'categories': category_list, 'pages': page_list}
     return render(request, 'rango/index.html', context = context_dict)
    #return HttpResponse("Rango says hey there partner! ")
 
@@ -65,4 +67,4 @@ def show_category (request, category_name_slug):
 
     # Go render the response and return it to the client
 
-    return render(request, 'rango/category.html', context_dict)
+    return render(request, 'rango/category.html', context_dict, )
