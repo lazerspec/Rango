@@ -28,7 +28,9 @@ def about(request):
 ##
     #context_dict = { 'Rango says here is the about page.'}
 
-    return HttpResponse("Rango  says here is the about page. <a href='/rango/'>View index page</a>")  #The HTML link is a reference back to the starter page
+    return render(request, 'rango/about.html',{})
+
+    #return HttpResponse("Rango  says here is the about page. <a href='/rango/'>View index page</a>")  #The HTML link is a reference back to the starter page
 
 
 def show_category (request, category_name_slug):
