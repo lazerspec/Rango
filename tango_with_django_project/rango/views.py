@@ -28,6 +28,10 @@ def about(request):
 ##
     #context_dict = { 'Rango says here is the about page.'}
 
+    print(request.method)
+
+    print(request.user)
+
     return render(request, 'rango/about.html',{})
 
     #return HttpResponse("Rango  says here is the about page. <a href='/rango/'>View index page</a>")  #The HTML link is a reference back to the starter page
