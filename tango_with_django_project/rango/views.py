@@ -7,6 +7,9 @@ from rango.models import Category   #starting to put in ordered pages
 from rango.models import Page
 from rango.forms import CategoryForm, PageForm
 from rango.forms import UserForm, UserProfileForm
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponseRedirect, HttpResponse
+from django.core.urlresolvers import reverse
 
 def index (request):    #Responsible for the main page view
     # Query the database for a list of ALL categories currently stored.
@@ -164,4 +167,31 @@ def register(request):
                    'profile_form': profile_form,
                    'registered': registered
                    })
+
+def user_login(request):
+    if request.method == 'POST':
+        #POST.get because returns none if not exist
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        #Check if combo valid
+        user = authenticate(username=username, password=password)
+
+        #If we have a user object, details correct
+        if user:
+            #Account active?
+            if user.is_active:
+                #valid
+                login(request, user)
+                return HttpResponseRedirect(reverse('index'))
+            else:
+                #Inactive account used
+                return HttpResponse("Your Rango account is disabled")
+        else:
+            #Bad login details provided
+            print("Invalid login details: {0}, {1}".format(username, password))
+            return HttpResponse("Invalid login details supplied.")
+    #Request not in POST, so display login form
+    else:
+        return render(request, 'rango/login.html', {})
 
