@@ -12,8 +12,10 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from datetime import datetime
 
 def index (request):    #Responsible for the main page view
+    request.session.set_test_cookie()
     # Query the database for a list of ALL categories currently stored.
     # Order the categories by no. likes in descending order.
     #  Retrieve the top 5 only - or all if less than 5.
@@ -27,11 +29,20 @@ def index (request):    #Responsible for the main page view
     #context_dict = {'boldmessage': "Crunchy, creamy, cookie, candy, cupcake!"}
 
     context_dict = {'categories': category_list, 'pages': page_list}
+
+    response = render(request, 'rango/index.html', context_dict)
+    visitor_cookie_handler(request, response)
+    return response
     return render(request, 'rango/index.html', context = context_dict)
    #return HttpResponse("Rango says hey there partner! ")
 
 def about(request):
-##
+
+    if request.session.test_cookie_worked():
+        print("TEST COOKIE WORKED!")
+        request.session.delete_test_cookie()
+
+
     #context_dict = { 'Rango says here is the about page.'}
 
     print(request.method)
@@ -207,4 +218,26 @@ def user_logout(request):
     logout(request)
     #Take back to homepage
     return HttpResponseRedirect(reverse('index'))
+
+def visitor_cookie_handler(request, response):
+    #get number of visits to the site
+    #use COOKIES.get() to obtain the visits cookie
+    #If cookie exists, value returned is casted to an int
+    #If no cookie, default value of 1
+    visits = int(request.COOKIES.get('visits', '1'))
+
+    last_visit_cookie = request.COOKIES.get('last_visit', str(datetime.now()))
+    last_visit_time = datetime.strptime(last_visit_cookie[:-7],'%Y-%m-%d %H:%M:%S')
+    #If more than a day since last visit
+    if (datetime.now() - last_visit_time).days > 0:
+        visits = visits + 1
+        #update count
+        response.set_cookie('last_visit', str(datetime.now()))
+    else:
+        visits = 1
+
+        response.set_cookie('last_visit', last_visit_cookie)
+
+    response.set_cookie('visits', visits)
+
 
